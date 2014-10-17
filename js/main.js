@@ -1,6 +1,7 @@
 var suggestCallBack; // global var for autocomplete jsonp
 
-$(document).ready(function () {
+$(document).ready(function () {  
+
     $("#search").autocomplete({
         source: function(request, response) {
             $.getJSON("http://suggestqueries.google.com/complete/search?callback=?",
@@ -20,5 +21,15 @@ $(document).ready(function () {
                 response(suggestions);
             };
         },
+        select: function(event, ui) {
+            var query = ui.item.value;
+            console.log(query);
+        },        
+    });
+
+    $("#search").keypress(function(e){
+        if (e.keyCode == 13) {
+            console.log($(this).val());
+        }
     });
 });
