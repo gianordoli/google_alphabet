@@ -3,6 +3,8 @@ This file uses Google Suggest for jQuery plugin (licensed under GPLv3) by Haochi
  */
 $.fn.googleSuggest = function(opts){
   opts = $.extend({service: 'web', secure: false}, opts);
+  
+  // console.log(opts.service);
 
   var services = {
     youtube: { client: 'youtube', ds: 'yt' },
@@ -13,6 +15,8 @@ $.fn.googleSuggest = function(opts){
     web: { client: 'psy', ds: '' },
     recipes: { client: 'psy', ds: 'r' }
   }, service = services[opts.service];
+
+  // console.log(service);
 
   opts.source = function(request, response){
     $.ajax({
@@ -34,7 +38,8 @@ $.fn.googleSuggest = function(opts){
 
   opts.select = function(event, ui) {
     var query = ui.item.value;
-    console.log(query);
+    // console.log(query);
+    goSearch(query);
   };  
   
   return this.each(function(){
