@@ -39,7 +39,7 @@ $.fn.googleSuggest = function(opts){
   opts.select = function(event, ui) {
     query = ui.item.value;
     // console.log(query);
-    goSearch();
+    getImages();
   };  
   
   return this.each(function(){
