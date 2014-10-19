@@ -37,9 +37,9 @@ $.fn.googleSuggest = function(opts){
   };
 
   opts.select = function(event, ui) {
-    var query = ui.item.value;
+    query = ui.item.value;
     // console.log(query);
-    goSearch(query);
+    goSearch();
   };  
   
   return this.each(function(){

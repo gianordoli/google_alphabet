@@ -1,4 +1,6 @@
 var goSearch;
+var imagesSrc = [];
+var query;
 
 $(document).ready(function () {
 
@@ -16,14 +18,22 @@ $(document).ready(function () {
     }
 
     function setAutocomplete() {
+        var searchBar = $('input[name="search"]');
         console.log('Called setAutocomplete.');
-        if($('input[name="search"]').length == 0){
+        if(searchBar.length == 0){
             console.log('Search bar not found.');
-            setTimeout(setAutocomplete, 1000);
+            setTimeout(setAutocomplete, 100);
         }else{
             console.log('Search bar found.');
             // Set the default service to web (checked radio button)
-            $('input[name="search"]').googleSuggest({ service: $('input[name="service"]').val() });
+            searchBar.googleSuggest({ service: $('input[name="service"]').val() });
+            searchBar.attr('maxlength','1');
+            // searchBar.keypress(function(e){
+            //     $(this).val($(this).val().substring(0, 1));
+            // });
+            searchBar.focus(function(e){
+                $(this).val($(this).val().substring(0, 1));
+            });            
         }
     }
 
@@ -35,8 +45,39 @@ $(document).ready(function () {
         $('input[name="search"]').googleSuggest({ service: $(this).val() });
     });
 
-    goSearch = function(query){
-        console.log('Called search: ' + query);
+    goSearch = function(){
+        // var wrapper = $('div.gsc-results.gsc-imageResult.gsc-imageResult-popup');
+        var wrapper = $('div.gsc-results-wrapper-nooverlay.gsc-results-wrapper-visible');
+
+        if(wrapper.length == 0){
+            console.log('Results not found.');
+            setTimeout(goSearch, 500);
+        }else{  
+            console.log('Results found.');          
+            // Get images
+            var allImages = $(wrapper).find('img.gs-image.gs-image-scalable');
+            console.log(allImages.length);
+            // console.log(allImages);
+
+            if(allImages[0].src == imagesSrc[0]){
+                console.log('   Search not updated.');
+                setTimeout(goSearch, 500);
+            }else{
+                console.log('   Search updated.');
+                // Get src
+                for(var i = 0; i < allImages.length; i++){
+                    imagesSrc[i] = allImages[i].src;
+                }
+                console.log(imagesSrc);                
+            }
+
+
+
+            //Clean up Google's layout
+            // $(wrapper).css({
+            //     'display': 'none'
+            // });
+        }
     }
 
 });
