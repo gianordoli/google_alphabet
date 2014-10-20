@@ -1,20 +1,26 @@
+body, html{
+  margin: 0;
+  border: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
 #menu{
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 20px;
+  left: 20px;
+  width: 320px;
+  background: white;
   z-index: 500;
+  border: 1px;
+  border-style: solid;
+  padding: 10px;
 }
 
 canvas{
   z-index: 0;
 }
 
-div{
-  background: white;
-}
+.pixel-img{
 
-.pixelDiv{
-  z-index: 10;
-  width: 10px;
-  height: 10px;
 }

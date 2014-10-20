@@ -1,6 +1,6 @@
 var getImages;
-var imagesSrc = [];
 var query;
+var imagesSrc = [];
 
 $(document).ready(function () {
 
@@ -37,9 +37,9 @@ $(document).ready(function () {
             // searchBar.keypress(function(e){
             //     $(this).val($(this).val().substring(0, 1));
             // });
-            // searchBar.focus(function(e){
-            //     $(this).val($(this).val().substring(0, 1));
-            // });            
+            searchBar.focus(function(e){
+                $(this).val($(this).val().substring(0, 1));
+            });            
         }
     }
 
@@ -57,7 +57,7 @@ $(document).ready(function () {
             var allImages = $(wrapper).find('img.gs-image.gs-image-scalable');
             console.log(allImages.length);
             // console.log(allImages);
-
+            
             if(allImages.length > 0 &&
                (imagesSrc.length == 0 || allImages[0].src != imagesSrc[0])){
                 console.log('   Search updated.');
@@ -71,6 +71,12 @@ $(document).ready(function () {
                 $(wrapper).css({
                     'display': 'none'
                 });
+
+                // Remove previous divs
+                $('img.pixel-img').remove();
+
+                // Clean up search bar
+                $('input[name="search"]').val(query.substring(0, 1));
 
                 // Call p5 app
                 initApp();
@@ -94,91 +100,50 @@ $(document).ready(function () {
 /*----------------------------------------------------------------
 ------------------------------ P5 --------------------------------
 ----------------------------------------------------------------*/
-var isLoaded = false;
 function initApp(){
-    isLoaded = true;
-}
+    // isLoaded = true;
 
-function setup() {
-    var canvas = createCanvas(window.innerWidth - 4, window.innerHeight - 4);  
-    canvas.position(0, 0);
-    console.log(width, height);
-}
+    background(0);
 
-function mousePressed() {
+    fill(255);
+    stroke(0);
+    textSize((height/2)*1.5);
+    textAlign(LEFT);
+    textFont('Helvetica');
+    var letter = query.substr(0, 1);
+    letter = letter.toUpperCase();
+    text(letter, 0, height/2);
 
-    if(isLoaded){
+    var res = 30;
+    var divScale = 1.8;
+    var imgIndex = 0;
 
-        background(0);
-
-        fill(255);
-        stroke(0);
-        textSize(height/2);
-        textAlign(LEFT);
-        textFont('Helvetica');
-        var letter = query.substr(0, 1);
-        letter = letter.toUpperCase();
-        text(letter, 0, height/2);
-
-        var res = 20;
-        var rectSize = 15;
-
-        for(var i = 0; i < width; i += res){
-            for(var j = 0; j < height; j += res){       
-                var c = get(i*2, j*2);      
-                if(c[0] > 10){
-                    fill(255, 0, 0);
-                    noStroke();
-                    rect(i - rectSize/2, j - rectSize/2, rectSize, rectSize);
+    for(var i = 0; i < width; i += res){
+        for(var j = 0; j < height; j += res){       
+            var c = get(i*2, j*2);      
+            if(c[0] > 10){
+                var newImg = createImg(imagesSrc[imgIndex], '');
+                newImg.position((i*divScale*1.5) - (res*divScale), j*divScale);
+                newImg.style('z-index', '10');
+                newImg.class('pixel-img');
+                imgIndex ++;
+                if(imgIndex > imagesSrc.length - 1){
+                    imgIndex = 0;
                 }
             }
         }
     }
+
+    background(random(255), 255, 255);
+}
+
+function setup() {
+    colorMode(HSB, 255);
+    var canvas = createCanvas(window.innerWidth - 4, window.innerHeight - 4);  
+    canvas.position(0, 0);
+    // console.log(width, height);
 }
 
 function draw() {
-    if(isLoaded){
-        // if(createP5Images){
-        //     var img = loadImage(imagesSrc[0]);
-        //     createP5Images = false;
-        // }
-            
 
-        // background(0);
-
-
-
-        // var c = get(round(mouseX/2), round(mouseY/2));
-        // console.log(c);        
-        // console.log(mouseX + ', ' + mouseY);
-
-        // var res = 40;
-        
-        // for(var y = 0; y < height; y += res){
-        //     for(var x = 0; x < width; x += res){
-
-        //         // rect(x, y, res/2, res/2);
-
-        //         // var i = (x + (y * width))*4;
-        //         var c = get(x*2, y*2);
-        //         fill(0, 255, 255);
-        //         noStroke();
-        //         textSize(8);
-        //         text(c[0], x/2, y/2);
-        //         // text(x, x, y);
-        //         // text(y, x, y + 8);
-
-        //         // if(c.red > 10){
-        //         //     var newDiv = createDiv('');
-        //         //     newDiv.position(x - width/2, y);
-        //         //     newDiv.class('pixelDiv');
-        //         // }
-        //     }
-        // }
-
-        // var res = floor(map(mouseX, 0, width, 5, 40));
-        
-
-
-    }
 }
