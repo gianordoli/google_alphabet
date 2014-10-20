@@ -34,12 +34,6 @@ $(document).ready(function () {
             // Set the default service to web (checked radio button)
             searchBar.googleSuggest({ service: $('input[name="service"]').val() });
             searchBar.attr('maxlength','1');
-            // searchBar.keypress(function(e){
-            //     $(this).val($(this).val().substring(0, 1));
-            // });
-            searchBar.focus(function(e){
-                $(this).val($(this).val().substring(0, 1));
-            });            
         }
     }
 
@@ -76,7 +70,7 @@ $(document).ready(function () {
                 $('img.pixel-img').remove();
 
                 // Clean up search bar
-                $('input[name="search"]').val(query.substring(0, 1));
+                $('input[name="search"]').val(query.substring(0, 1));                
 
                 // Call p5 app
                 initApp();
@@ -92,7 +86,13 @@ $(document).ready(function () {
     // Attribute Google Search service when radio button is selected
     $('input[name="service"]').click(function(){
         // console.log($(this).val());
-        $('input[name="search"]').googleSuggest({ service: $(this).val() });
+        var searchBar = $('input[name="search"]');
+        
+        // Bind the autocomplete to a new service
+        $(searchBar).googleSuggest({ service: $(this).val() });
+
+        // Calls the autocomplete
+        $(searchBar).autocomplete('search', $(searchBar).val());
     });    
 });
 
@@ -133,7 +133,6 @@ function initApp(){
             }
         }
     }
-
     background(random(255), 255, 255);
 }
 

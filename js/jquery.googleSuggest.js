@@ -40,9 +40,18 @@ $.fn.googleSuggest = function(opts){
     query = ui.item.value;
     // console.log(query);
     getImages();
-  };  
+  }; 
   
   return this.each(function(){
+    // Bind the autocomplete to the element
     $(this).autocomplete(opts);
+
+    // Calls the autocomplete onFocus
+    $(this).focus(function(e){
+      $(this).val($(this).val().substring(0, 1));
+      $(this).autocomplete('search', $(this).val());
+    });
+
+
   });
 }
