@@ -38,7 +38,7 @@ $.fn.googleSuggest = function(opts){
 
   opts.select = function(event, ui) {
     query = ui.item.value;
-    // console.log(query);
+    console.log(query);
     getImages();
   }; 
   
