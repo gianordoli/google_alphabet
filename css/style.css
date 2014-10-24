@@ -3,18 +3,34 @@ body, html{
   border: 0;
   padding: 0;
   overflow: hidden;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 13px;
+}
 
+/*div{
+  background-color: white;
+}*/
+
+h1{
+  font-size: 21px;
+  /*padding: 0 0 5px 0;
+  border-bottom: 1px solid black;*/
+}
+
+input{
+  font-size: 8px;
 }
 
 #menu{
   position: absolute;
   top: 20px;
   left: 20px;
-  width: 320px;
+  width: 300px;
   background: white;
+  /*background: rgba(255, 255, 255, 0.3);*/
   z-index: 500;
-  border: 1px;
-  border-style: solid;
+  /*border: 1px;
+  border-style: solid;*/
   padding: 10px;
 }
 

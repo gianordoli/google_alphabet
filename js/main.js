@@ -1,10 +1,17 @@
 var getImages;
 var query;
 var imagesSrc = [];
+var displayScale;
 
 $(document).ready(function () {
 
+    var devicePixelRatio  = window.devicePixelRatio || 1;
+    // console.log('devicePixelRatio: ' + devicePixelRatio);
+    displayScale = (devicePixelRatio == 2)?(1):(1.5);
+    console.log('displayScale: ' + displayScale);
+
     googleSearch(setAutocomplete);
+    bindBt();
     
     /*------------------------- FUNCTIONS -------------------------*/
 
@@ -70,7 +77,10 @@ $(document).ready(function () {
                 $('img.pixel-img').remove();
 
                 // Clean up search bar
-                $('input[name="search"]').val(query.substring(0, 1));                
+                $('input[name="search"]').val(query.substring(0, 1));
+
+                // Clean up message
+                $('#msg-spam').html('');
 
                 // Call p5 app
                 initApp();
@@ -93,7 +103,36 @@ $(document).ready(function () {
 
         // Calls the autocomplete
         $(searchBar).autocomplete('search', $(searchBar).val());
-    });    
+    });
+
+    function bindBt(){
+        var btSubmit = $('input.gsc-search-button.gsc-search-button-v2');
+        if(btSubmit.length == 0){
+            console.log('Submit button not found.');
+            setTimeout(bindBt, 500);
+        }else{
+            console.log('Found the submit button!');
+            $(btSubmit).click(function(){
+                if($('#msg-spam').length == 0){
+                    $('#menu').append('<spam id="msg-spam"></spam>');
+                }                
+                var msg;
+                if($('input[name="search"]').val().length == 0){
+                    msg = 'Please type a letter to start.';
+                }else{
+                    msg = 'Loading results.';
+                }
+                $('#msg-spam').html(msg);
+            });
+        }        
+    }
+
+    
+    // 
+    // $('.gsc-search-button')[0].click(function(){
+    //     console.log('hey');
+    // });
+    
 });
 
 
@@ -115,15 +154,16 @@ function initApp(){
     text(letter, 0, height/2);
 
     var res = 30;
-    var divScale = 1.8;
+    var divScale = 1.8 * displayScale;
     var imgIndex = 0;
+    var offset = $('#menu').width()*0.9;
 
     for(var i = 0; i < width; i += res){
         for(var j = 0; j < height; j += res){       
             var c = get(i*2, j*2);      
             if(c[0] > 10){
                 var newImg = createImg(imagesSrc[imgIndex], '');
-                newImg.position((i*divScale*1.5) - (res*divScale), j*divScale);
+                newImg.position(offset + (i*divScale*1.5) - (res*divScale), j*divScale);
                 newImg.style('z-index', '10');
                 newImg.class('pixel-img');
                 imgIndex ++;
