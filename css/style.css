@@ -29,8 +29,8 @@ input{
   background: white;
   /*background: rgba(255, 255, 255, 0.3);*/
   z-index: 500;
-  /*border: 1px;
-  border-style: solid;*/
+  border: 1px;
+  border-style: solid;
   padding: 10px;
 }
 
