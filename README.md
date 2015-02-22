@@ -12,6 +12,8 @@ Spring, 2014
 
 [Project link here](http://54.204.173.108/parsons/thesis_1/google_alphabet/)
 
+Part of a series of projects documented [here](https://gabrielmfadt.wordpress.com/category/thesis-1/).
+
 ---
 
 ![Letter A](https://gabrielmfadt.files.wordpress.com/2014/10/a.png)
